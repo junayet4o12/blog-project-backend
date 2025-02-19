@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
 import config from "../../config";
 import AppError from "../../errors/AppError";
-import { IReturningData, IUser, IUserCheckingOptions, TUserRole } from "../user/user.interface";
+import { IUser, IUserCheckingOptions, TUserRole } from "../user/user.interface";
 import User from "../user/user.model";
 import bcrypt from 'bcrypt'
 import { createToken } from './auth.utils';
@@ -37,7 +37,7 @@ const loginUser = async (payload: Pick<IUser, 'email' | 'password'>) => {
     }
 
     const jwtPayload = {
-        userId: userData?.email as string,
+        email: userData?.email as string,
         role: userData?.role as TUserRole
     }
     const accessToken = createToken(jwtPayload, config.jwt_access_secret as string, config.jwt_access_expires_in as SignOptions["expiresIn"])

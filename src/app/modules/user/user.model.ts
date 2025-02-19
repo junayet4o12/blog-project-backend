@@ -43,6 +43,7 @@ userSchema.statics.checkingUser = async function (
     let returningData: IReturningData = {};
 
     const userData = await User.findOne(payload).select('+password');
+    console.log(payload, userData);
 
     if (!userData) {
         throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid credentials');
