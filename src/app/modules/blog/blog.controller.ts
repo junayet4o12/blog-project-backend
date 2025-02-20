@@ -23,10 +23,15 @@ const getAllBlogsFromDB = catchAsync(async (req, res) => {
     const result = await BlogServices.getAllBlogsFromDB(req.query);
     sendResponse(res, { statusCode: httpStatus.OK, success: true, message: "Blogs fetched successfully", data: result })
 })
+const getSingleBlogFromDB = catchAsync(async (req, res) => {
+    const result = await BlogServices.getSingleBlogFromDB(req.params.id)
+    sendResponse(res, { statusCode: httpStatus.OK, success: true, message: "Blog fetched successfully", data: result })
+})
 
 export const BlogControllers = {
     createBlog,
     updateBlog,
     deleteBlog,
-    getAllBlogsFromDB
+    getAllBlogsFromDB,
+    getSingleBlogFromDB
 }

@@ -43,11 +43,19 @@ const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
     const result = await searchBlog.modelQuery.populate('author');
     return result
 }
+const getSingleBlogFromDB = async (id: string) => {
+    const result = await Blog.findById(id);
+    if (!result) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Blog not found!')
+    }
+    return result
+}
 
 
 export const BlogServices = {
     createBlogIntoDB,
     updateBlogOfDB,
     deleteBlogFromDB,
-    getAllBlogsFromDB
+    getAllBlogsFromDB,
+    getSingleBlogFromDB
 }

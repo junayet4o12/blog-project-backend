@@ -9,6 +9,7 @@ router.post('', auth('user'), validateRequest(BlogValidations.createBlogValidati
 router.patch('/:id', auth('user'), validateRequest(BlogValidations.updateBlogValidation), BlogControllers.updateBlog);
 router.delete('/:id', auth('user'), BlogControllers.deleteBlog);
 router.get('', BlogControllers.getAllBlogsFromDB);
+router.get('/:id', BlogControllers.getSingleBlogFromDB);
 
 const BlogRoutes = router;
 export default BlogRoutes
