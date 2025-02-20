@@ -22,9 +22,15 @@ class QueryBuilder<T> {
         return this
     }
     filter() {
-        const { search, limit, page, fields, sortBy, sortOrder, ...queryObject } = this.query;
-        this.modelQuery = this.modelQuery.find(queryObject);
+        const { filter } = this.query;
+
+        if (filter) {
+            const allAuthorId = (filter as string).split(',')
+            this.modelQuery = this.modelQuery.find({ author: { $in: allAuthorId } });
+            return this
+        }
         return this
+
     };
     sortBy() {
         const sortOrder = this.query.sortOrder ? (this.query.sortOrder === 'asc' ? '' : '-') : '-'
