@@ -2,161 +2,216 @@
 
 ## 📌 Overview
 
-Blog-Project-Backend is a backend application built with **Express.js and TypeScript**, integrating **MongoDB with Mongoose** to manage a blogging platform. The API allows users to perform CRUD operations on **blogs**, while admins have additional privileges such as managing users and their blogs. Authentication and authorization ensure secure access control.
+Blog-Project-Backend is a robust RESTful API built with Express.js and TypeScript, designed to power a modern blogging platform. This application integrates MongoDB with Mongoose ODM to provide scalable data persistence, comprehensive authentication using JWT, and role-based access control for users and administrators.
 
-## 🌐 Live API Testing
+## 🚀 Live API
 
 Test the API endpoints using the deployed version:
 
 ```
-https://blog-project-backend.vercel.app/
+https://blog-project-backend-rosy.vercel.app/
 ```
 
-## 🛠️ Features
+## 🛠️ Core Features
 
-- ✅ **User Authentication** – Secure user registration and login with JWT
-- ✅ **Blog Management** – Users can create, update, and delete their blogs
-- ✅ **Role-Based Access Control** – Admins can manage users and delete any blog
-- ✅ **Public Blog API** – Blogs can be viewed with search, sort, and filter functionalities
-- ✅ **Error Handling** – Standardized error responses for validation and resource handling
+- ✅ **Secure Authentication** – JWT-based auth flow with access and refresh tokens
+- ✅ **Content Management** – Full CRUD operations for blog posts with validation
+- ✅ **Role-Based Access Control** – User/Admin permission system
+- ✅ **Advanced Querying** – Search, filter, sort, and paginate blog content
+- ✅ **Error Management** – Comprehensive error handling and validation
+- ✅ **API Documentation** – Interactive Swagger docs for easy exploration
 
-## 🎯 API Endpoints
+## 📊 API Endpoints
 
-### 🔹 Authentication
+### 🔐 Authentication
 
-- **POST** `/api/auth/register` – Register a new user
-- **POST** `/api/auth/login` – Authenticate user and get a JWT token
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| POST | `/api/auth/register` | Register new user | Public |
+| POST | `/api/auth/login` | Authenticate and get tokens | Public |
+| POST | `/api/auth/refresh` | Refresh access token | Auth Required |
+| POST | `/api/auth/logout` | Invalidate tokens | Auth Required |
 
-### 🔹 Blog Management
+### 📝 Blog Management
 
-- **POST** `/api/blogs` – Create a new blog (User only)
-- **PATCH** `/api/blogs/:id` – Update an existing blog (Only by the author)
-- **DELETE** `/api/blogs/:id` – Delete a blog (Only by the author)
-- **GET** `/api/blogs` – Fetch all blogs (Public API with search, sort, and filter)
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/api/blogs` | Fetch all blogs (with pagination/filter) | Public |
+| GET | `/api/blogs/:id` | Fetch single blog by ID | Public |
+| POST | `/api/blogs` | Create new blog | User |
+| PATCH | `/api/blogs/:id` | Update own blog | Owner |
+| DELETE | `/api/blogs/:id` | Delete own blog | Owner |
 
-### 🔹 Admin Actions
+### 👤 User Management 
 
-- **PATCH** `/api/admin/users/:userId/block` – Block a user
-- **DELETE** `/api/admin/blogs/:id` – Delete any blog
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/api/users/profile` | Get current user profile | Auth Required |
+| PATCH | `/api/users/profile` | Update user profile | Auth Required |
 
-## Prerequisites
+### 🔑 Admin Operations
 
-Before running this project, make sure you have the following installed:
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/api/admin/users` | Get all users | Admin |
+| PATCH | `/api/admin/users/:userId/block` | Block/unblock user | Admin |
+| DELETE | `/api/admin/blogs/:id` | Delete any blog | Admin |
 
-- Node.js (v14 or higher)
-- npm (Node Package Manager)
-- MongoDB (local installation or MongoDB Atlas account)
+## 🧰 Prerequisites
 
-## Installation
+- Node.js (v16+ recommended)
+- npm or yarn
+- MongoDB (local or Atlas)
+- Git
+
+## 📋 Installation
 
 1. Clone the repository:
-
 ```bash
 git clone https://github.com/junayet4o12/blog-project-backend.git
 cd blog-project-backend
 ```
 
 2. Install dependencies:
-
 ```bash
 npm install
+# or 
+yarn install
 ```
 
-3. Environment Setup
-
-Create a `.env` file in the root directory with the following variables:
+3. Configure environment variables:
+   
+Create a `.env` file in the project root with the following variables:
 
 ```env
+# Environment
 NODE_ENV=development
 PORT=5000
+
+# Database
 DB_URL=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
+
+# Authentication
+BCRYPT_SALT_ROUNDS=12
+DEFAULT_PASS=your_default_password
+
+# JWT Configuration
+JWT_ACCESS_SECRET=your_access_token_secret
+JWT_REFRESH_SECRET=your_refresh_token_secret
+JWT_ACCESS_EXPIRES_IN=1d
+JWT_REFRESH_EXPIRES_IN=30d
 ```
 
-## Available Scripts
+## 🏃‍♂️ Running the Application
 
-- **Development Mode**:
-
+### Development mode:
 ```bash
 npm run start:dev
+# or
+yarn start:dev
 ```
 
-Runs the application in development mode with hot-reload using ts-node-dev.
-
-- **Production Build**:
-
+### Production build:
 ```bash
 npm run build
-```
-
-Compiles TypeScript code to JavaScript in the `dist` directory.
-
-- **Production Mode**:
-
-```bash
 npm run start:prod
+# or
+yarn build
+yarn start:prod
 ```
 
-Runs the compiled application from the `dist` directory.
-
-- **Linting**:
-
+### Linting:
 ```bash
-npm run lint       # Check for linting issues
-npm run lint:fix   # Fix automatic linting issues
+npm run lint        # Check for issues
+npm run lint:fix    # Fix automatic issues
 ```
 
-## Project Structure
+## 🏗️ Project Structure
 
 ```
 blog-project-backend/
-├── src/
-│   ├── models/
-│   ├── routes/
-│   ├── controllers/
-│   ├── middlewares/
-│   └── server.ts
-├── dist/
-├── .env
-├── .eslintrc
-├── package.json
-├── tsconfig.json
-└── README.md
+├── src/                    # Source code
+│   ├── app/                # Application core
+│   │   ├── builder/        # Express app setup
+│   │   ├── config/         # Configuration files
+│   │   ├── errors/         # Error handling
+│   │   ├── interface/      # TypeScript interfaces
+│   │   ├── middlewares/    # Express middlewares
+│   │   ├── modules/        # Feature modules
+│   │   ├── routes/         # API routes
+│   │   └── utils/          # Utility functions
+│   ├── app.ts              # Express app entry point
+│   └── server.ts           # Server initialization
+├── dist/                   # Compiled JavaScript
+├── .env                    # Environment variables
+├── .eslintrc               # ESLint configuration
+├── .gitignore              # Git ignore rules
+├── package.json            # Project dependencies
+├── tsconfig.json           # TypeScript configuration
+└── README.md               # Project documentation
 ```
 
-## Tech Stack
+## 💻 Tech Stack
 
-- Node.js
-- Express.js
-- TypeScript
-- MongoDB with Mongoose
-- Zod (Schema validation)
-- bcrypt (Password hashing)
-- JSON Web Token (JWT) for authentication
-- ESLint (Code linting)
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Language**: TypeScript
+- **Database**: MongoDB
+- **ODM**: Mongoose
+- **Authentication**: JWT (jsonwebtoken)
+- **Validation**: Zod
+- **Password Hashing**: bcrypt
+- **Linting**: ESLint
+- **Deployment**: Vercel
 
-## Security Note
+## 🔒 Security Best Practices
 
-For security reasons, it's recommended to:
+This project implements several security best practices:
+- Password hashing with bcrypt
+- JWT with short-lived access tokens
+- Role-based access control
+- Input validation and sanitization
+- Protected routes with middleware
+- Rate limiting to prevent brute force attacks
 
-- Never commit the `.env` file to version control
-- Use environment-specific configuration for different deployment environments
-- Regularly update dependencies to patch security vulnerabilities
+## 🧪 Testing
 
-## Development
+Run the test suite:
+```bash
+npm run test
+# or
+yarn test
+```
 
-For local development:
+## 📦 Deployment
 
-1. Ensure MongoDB is running locally or you have access to a MongoDB Atlas cluster
-2. Configure your `.env` file with appropriate values
-3. Run `npm run start:dev` to start the development server
-4. The API will be available at `http://localhost:5000`
+The application is optimized for deployment on Vercel:
 
-## Contributing
+1. Connect your GitHub repository to Vercel
+2. Configure environment variables in Vercel dashboard
+3. Deploy with serverless functions support
+4. Configure custom domain if needed
+
+## 📝 API Documentation
+
+Interactive API documentation is available at `/api-docs` when running the server. The documentation provides:
+- Detailed endpoint descriptions
+- Request/response examples
+- Authentication requirements
+- Interactive testing capabilities
+
+## 🤝 Contributing
+
+We welcome contributions to improve the Blog-Project-Backend:
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+Please ensure your code follows the project's coding standards and includes appropriate tests.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
