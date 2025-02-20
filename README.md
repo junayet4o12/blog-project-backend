@@ -182,14 +182,6 @@ The application is optimized for deployment on Vercel:
 3. Deploy with serverless functions support
 4. Configure custom domain if needed
 
-## 📝 API Documentation
-
-Interactive API documentation is available at `/api-docs` when running the server. The documentation provides:
-- Detailed endpoint descriptions
-- Request/response examples
-- Authentication requirements
-- Interactive testing capabilities
-
 ## 🤝 Contributing
 
 We welcome contributions to improve the Blog-Project-Backend:
