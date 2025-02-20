@@ -29,8 +29,6 @@ https://blog-project-backend-rosy.vercel.app/
 |--------|----------|-------------|--------|
 | POST | `/api/auth/register` | Register new user | Public |
 | POST | `/api/auth/login` | Authenticate and get tokens | Public |
-| POST | `/api/auth/refresh` | Refresh access token | Auth Required |
-| POST | `/api/auth/logout` | Invalidate tokens | Auth Required |
 
 ### 📝 Blog Management
 
@@ -53,7 +51,6 @@ https://blog-project-backend-rosy.vercel.app/
 
 | Method | Endpoint | Description | Access |
 |--------|----------|-------------|--------|
-| GET | `/api/admin/users` | Get all users | Admin |
 | PATCH | `/api/admin/users/:userId/block` | Block/unblock user | Admin |
 | DELETE | `/api/admin/blogs/:id` | Delete any blog | Admin |
 
