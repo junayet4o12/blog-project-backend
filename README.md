@@ -40,13 +40,6 @@ https://blog-project-backend-rosy.vercel.app/
 | PATCH | `/api/blogs/:id` | Update own blog | Owner |
 | DELETE | `/api/blogs/:id` | Delete own blog | Owner |
 
-### 👤 User Management 
-
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|--------|
-| GET | `/api/users/profile` | Get current user profile | Auth Required |
-| PATCH | `/api/users/profile` | Update user profile | Auth Required |
-
 ### 🔑 Admin Operations
 
 | Method | Endpoint | Description | Access |
