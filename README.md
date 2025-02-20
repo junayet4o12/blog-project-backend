@@ -164,15 +164,6 @@ This project implements several security best practices:
 - Protected routes with middleware
 - Rate limiting to prevent brute force attacks
 
-## 🧪 Testing
-
-Run the test suite:
-```bash
-npm run test
-# or
-yarn test
-```
-
 ## 📦 Deployment
 
 The application is optimized for deployment on Vercel:
