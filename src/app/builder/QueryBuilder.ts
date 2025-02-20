@@ -9,12 +9,12 @@ class QueryBuilder<T> {
     }
 
     search(searchableFields: string[]) {
-        const searchTerm = this?.query?.searchTerm
-        if (searchTerm) {
+        const search = this?.query?.search
+        if (search) {
             this.modelQuery = this.modelQuery.find({
                 $or: searchableFields.map(item => {
                     return {
-                        [item]: { $regex: searchTerm, $options: 'i' }
+                        [item]: { $regex: search, $options: 'i' }
                     }
                 })
             })
@@ -22,13 +22,14 @@ class QueryBuilder<T> {
         return this
     }
     filter() {
-        const { searchTerm, limit, page, fields, sort, ...queryObject } = this.query;
+        const { search, limit, page, fields, sortBy, sortOrder, ...queryObject } = this.query;
         this.modelQuery = this.modelQuery.find(queryObject);
         return this
     };
-    sort() {
-        const sort = this.query.sort ? (this.query.sort as string).split(',').join(' ') : '-createdAt';
-        this.modelQuery = this.modelQuery.sort(sort as string);
+    sortBy() {
+        const sortOrder = this.query.sortOrder ? (this.query.sortOrder === 'asc' ? '' : '-') : '-'
+        const sortBy = this.query.sortBy ? (this.query.sortBy as string).split(',').map(item => `${sortOrder}${item}`).join(' ') : `${sortOrder}createdAt`;
+        this.modelQuery = this.modelQuery.sort(sortBy as string);
         return this;
     };
     paginate() {
