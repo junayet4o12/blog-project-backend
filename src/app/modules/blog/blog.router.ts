@@ -8,7 +8,7 @@ import checkIsTheCreatorOfBlog from "../../middlewares/checkIsTheCreatorOfBlog";
 const router = Router();
 router.post('', auth('user'), validateRequest(BlogValidations.createBlogValidation), BlogControllers.createBlog);
 router.patch('/:id', auth('user'), checkIsTheCreatorOfBlog(), validateRequest(BlogValidations.updateBlogValidation), BlogControllers.updateBlog);
-router.delete('/:id', auth('user'), BlogControllers.deleteBlog);
+router.delete('/:id', auth('user'), checkIsTheCreatorOfBlog(), BlogControllers.deleteBlog);
 router.get('', BlogControllers.getAllBlogsFromDB);
 router.get('/:id', BlogControllers.getSingleBlogFromDB);
 
